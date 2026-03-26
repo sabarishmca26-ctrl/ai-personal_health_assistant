@@ -1,0 +1,84 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Stores user health profile and preferences.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "User ID" },
+        "displayName": { "type": "string", "description": "User's display name" },
+        "email": { "type": "string", "description": "User's email" },
+        "age": { "type": "number", "description": "User's age" },
+        "weight": { "type": "number", "description": "User's weight in kg" },
+        "height": { "type": "number", "description": "User's height in cm" },
+        "targetAge": { "type": "number", "description": "User's target age goal" },
+        "targetWeight": { "type": "number", "description": "User's target weight goal in kg" },
+        "targetHeight": { "type": "number", "description": "User's target height goal in cm" },
+        "goals": { "type": "array", "items": { "type": "string" }, "description": "Health goals" },
+        "role": { "type": "string", "enum": ["admin", "patient"], "description": "User role" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Profile creation date" }
+      },
+      "required": ["uid", "displayName", "email"]
+    },
+    "HealthLog": {
+      "title": "Health Log",
+      "description": "Daily health logs like steps, water intake, and mood.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "User ID" },
+        "date": { "type": "string", "format": "date", "description": "Log date" },
+        "steps": { "type": "number", "description": "Number of steps" },
+        "waterIntake": { "type": "number", "description": "Water intake in ml" },
+        "mood": { "type": "string", "description": "User's mood" },
+        "notes": { "type": "string", "description": "Additional notes" }
+      },
+      "required": ["uid", "date"]
+    },
+    "MealAnalysis": {
+      "title": "Meal Analysis",
+      "description": "AI analysis of meal images.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "User ID" },
+        "imageUrl": { "type": "string", "description": "URL of the meal image" },
+        "analysis": { "type": "string", "description": "AI analysis text" },
+        "calories": { "type": "number", "description": "Estimated calories" },
+        "macros": { "type": "object", "description": "Macronutrients breakdown" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Analysis date" }
+      },
+      "required": ["uid", "imageUrl", "analysis"]
+    },
+    "ChatHistory": {
+      "title": "Chat History",
+      "description": "History of conversations with the AI assistant.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "User ID" },
+        "messages": { "type": "array", "items": { "type": "object" }, "description": "Conversation messages" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last message date" }
+      },
+      "required": ["uid", "messages"]
+    },
+    "Reminder": {
+      "title": "Reminder",
+      "description": "User set reminders for health activities.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "User ID" },
+        "activity": { "type": "string", "description": "Activity name (e.g., Water, Medication)" },
+        "time": { "type": "string", "description": "Time for the reminder (HH:mm)" },
+        "days": { "type": "array", "items": { "type": "string" }, "description": "Days of the week" },
+        "enabled": { "type": "boolean", "description": "Whether the reminder is active" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation date" }
+      },
+      "required": ["uid", "activity", "time"]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": { "schema": "UserProfile", "description": "User profiles" },
+    "/users/{uid}/healthLogs/{logId}": { "schema": "HealthLog", "description": "Daily health logs" },
+    "/users/{uid}/mealAnalyses/{analysisId}": { "schema": "MealAnalysis", "description": "Meal image analyses" },
+    "/users/{uid}/chatHistories/{chatId}": { "schema": "ChatHistory", "description": "Chat history" },
+    "/users/{uid}/reminders/{reminderId}": { "schema": "Reminder", "description": "User reminders" }
+  }
+}

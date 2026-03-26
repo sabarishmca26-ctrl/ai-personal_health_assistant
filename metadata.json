@@ -1,0 +1,10 @@
+{
+  "name": "Healix - Personal Health Assistant",
+  "description": "An intelligent health companion featuring real-time voice advice, image-based nutrition analysis, and personalized wellness plans powered by Gemini.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation",
+    "notifications"
+  ]
+}
